@@ -1,6 +1,6 @@
 import { useReducer, useState } from "react";
 
-const initialState = { count: 0, step: 1 };
+const initialState = { count: 0, step: 1 }; // implement
 
 function reducer(state, action) {
   switch (action.type) {
