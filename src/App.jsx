@@ -38,7 +38,7 @@ function App() {
   console.log(questions, status);
 
   return (
-    <div className="App">
+    <div className="app">
       <Header />
       <Main>
         {status === "loading" && <Loader />}
