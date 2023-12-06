@@ -11,6 +11,8 @@ const initialState = {
   questions: [],
   status: "loading", // loading, error*, ready*, active, finished
   index: 0,
+  answer: null,
+  score: 0,
 };
 
 // REDUCER
@@ -23,7 +25,9 @@ function reducer(state, action) {
     case "start":
       return { ...state, status: "active" };
     case "next":
-      return { ...state, index: action.payload };
+      return { ...state, ...action.payload };
+    case "newAnswer":
+      return { ...state, answer: action.payload };
     default:
       throw new Error("Action Unknown");
   }
@@ -31,10 +35,13 @@ function reducer(state, action) {
 
 //
 function App() {
-  const [{ questions, status, index }, dispatch] = useReducer(
+  const [{ questions, status, index, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
+
+  console.log("answer", answer);
+  console.log("index", index);
 
   useEffect(() => {
     fetch(`http://localhost:3000/questions`)
@@ -57,6 +64,7 @@ function App() {
             index={index}
             questions={questions.at(index)}
             dispatch={dispatch}
+            answer={answer}
           />
         )}
       </Main>
