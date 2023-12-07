@@ -12,7 +12,7 @@ const initialState = {
   status: "loading", // loading, error*, ready*, active, finished
   index: 0,
   answer: null,
-  score: 0,
+  points: 0,
 };
 
 // REDUCER
@@ -25,9 +25,18 @@ function reducer(state, action) {
     case "start":
       return { ...state, status: "active" };
     case "next":
-      return { ...state, ...action.payload };
+      return { ...state, index: state.index + 1, answer: null };
     case "newAnswer":
-      return { ...state, answer: action.payload };
+      const question = state.questions.at(state.index);
+
+      return {
+        ...state,
+        answer: action.payload,
+        points:
+          action.payload === question.correctOption
+            ? state.points + question.points
+            : state.points,
+      };
     default:
       throw new Error("Action Unknown");
   }
@@ -35,13 +44,12 @@ function reducer(state, action) {
 
 //
 function App() {
-  const [{ questions, status, index, answer }, dispatch] = useReducer(
+  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
-  console.log("answer", answer);
-  console.log("index", index);
+  console.log("Points", points);
 
   useEffect(() => {
     fetch(`http://localhost:3000/questions`)

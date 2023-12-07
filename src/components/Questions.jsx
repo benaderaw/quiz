@@ -1,3 +1,4 @@
+import NextButton from "./NextButton";
 import Options from "./Options";
 
 /* eslint-disable react/prop-types */
@@ -13,21 +14,7 @@ export default function Questions({ questions, answer, dispatch, index }) {
         index={index}
       />
 
-      {answer !== null && (
-        <div>
-          <button
-            className="btn"
-            onClick={() =>
-              dispatch({
-                type: "next",
-                payload: { index: index + 1, answer: null },
-              })
-            }
-          >
-            next
-          </button>
-        </div>
-      )}
+      {answer !== null && <NextButton dispatch={dispatch} />}
     </div>
   );
 }

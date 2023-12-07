@@ -2,10 +2,19 @@
 export default function Options({ questions, answer, dispatch }) {
   const hasAnswered = answer !== null;
 
+  // helper function
   function className(i) {
     return `btn btn-option ${i === answer ? "answer" : ""} ${
       hasAnswered ? (i === questions.correctOption ? "correct" : "wrong") : ""
     }`;
+  }
+
+  // onClick
+  function handleClick(i) {
+    dispatch({
+      type: "newAnswer",
+      payload: i,
+    });
   }
 
   return (
@@ -15,7 +24,7 @@ export default function Options({ questions, answer, dispatch }) {
           className={className(i)}
           key={option}
           disabled={hasAnswered}
-          onClick={() => dispatch({ type: "newAnswer", payload: i })}
+          onClick={() => handleClick(i)}
         >
           {option}
         </button>

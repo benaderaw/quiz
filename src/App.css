@@ -269,3 +269,7 @@ progress {
   display: flex;
   justify-content: center;
 }
+
+.next-btn-container {
+  float: right;
+}
