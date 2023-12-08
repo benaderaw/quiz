@@ -273,3 +273,7 @@ progress {
 .next-btn-container {
   float: right;
 }
+
+.btn-restart {
+  float: right;
+}

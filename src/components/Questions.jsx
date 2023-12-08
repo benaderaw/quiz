@@ -2,19 +2,30 @@ import NextButton from "./NextButton";
 import Options from "./Options";
 
 /* eslint-disable react/prop-types */
-export default function Questions({ questions, answer, dispatch, index }) {
+export default function Questions({
+  question,
+  answer,
+  dispatch,
+  index,
+  questions,
+}) {
   return (
     <div>
-      <h4>{questions.question}</h4>
+      <h4>{question.question}</h4>
 
       <Options
-        questions={questions}
+        question={question}
         dispatch={dispatch}
         answer={answer}
         index={index}
       />
 
-      <NextButton dispatch={dispatch} answer={answer} />
+      <NextButton
+        dispatch={dispatch}
+        answer={answer}
+        questions={questions}
+        index={index}
+      />
     </div>
   );
 }

@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-export default function Options({ questions, answer, dispatch }) {
+export default function Options({ question, answer, dispatch }) {
   const hasAnswered = answer !== null;
 
   // helper function
   function className(i) {
     return `btn btn-option ${i === answer ? "answer" : ""} ${
-      hasAnswered ? (i === questions.correctOption ? "correct" : "wrong") : ""
+      hasAnswered ? (i === question.correctOption ? "correct" : "wrong") : ""
     }`;
   }
 
@@ -19,7 +19,7 @@ export default function Options({ questions, answer, dispatch }) {
 
   return (
     <div className="options">
-      {questions.options.map((option, i) => (
+      {question.options.map((option, i) => (
         <button
           className={className(i)}
           key={option}

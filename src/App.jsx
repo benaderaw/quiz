@@ -7,6 +7,7 @@ import Error from "./components/Error";
 import StartScreen from "./components/StartScreen";
 import Questions from "./components/Questions";
 import Progress from "./components/Progress";
+import Finished from "./components/Finished";
 
 const initialState = {
   questions: [],
@@ -14,6 +15,7 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  highScore: 0,
 };
 
 // REDUCER
@@ -27,7 +29,7 @@ function reducer(state, action) {
       return { ...state, status: "active" };
     case "next":
       return { ...state, index: state.index + 1, answer: null };
-    case "newAnswer":
+    case "newAnswer": {
       const question = state.questions.at(state.index);
 
       return {
@@ -38,26 +40,38 @@ function reducer(state, action) {
             ? state.points + question.points
             : state.points,
       };
+    }
+    case "quizOver": {
+      const newHighScore =
+        state.points > state.highScore ? state.points : state.highScore;
+
+      return { ...state, status: "finished", highScore: newHighScore };
+    }
+    case "restartQuiz":
+      return {
+        ...initialState,
+        questions: state.questions,
+        status: "ready", // loading, error*, ready*, active, finished
+        highScore: state.highScore,
+      };
     default:
       throw new Error("Action Unknown");
   }
 }
 
-//
+// Component start
 function App() {
-  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
-
-  console.log("Points", points);
+  const [
+    { questions, status, index, answer, points, highScore, restartQuiz },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     fetch(`http://localhost:3000/questions`)
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReceived", payload: data }))
       .catch((err) => dispatch({ type: "dataFailed" }));
-  }, []);
+  }, [restartQuiz]);
 
   return (
     <div className="app">
@@ -78,11 +92,20 @@ function App() {
             />
             <Questions
               index={index}
-              questions={questions.at(index)}
+              question={questions.at(index)}
               dispatch={dispatch}
               answer={answer}
+              questions={questions}
             />
           </>
+        )}
+        {status === "finished" && (
+          <Finished
+            questions={questions}
+            points={points}
+            highScore={highScore}
+            dispatch={dispatch}
+          />
         )}
       </Main>
     </div>

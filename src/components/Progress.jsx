@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 export default function Progress({ questions, index, points, answer }) {
-  const numOfQuestions = questions.length;
+  const numOfQuestion = questions.length;
 
   const totalPoints = questions.reduce((prev, curr) => {
     return prev + curr.points;
@@ -10,10 +10,10 @@ export default function Progress({ questions, index, points, answer }) {
 
   return (
     <header className="progress">
-      <progress max={numOfQuestions} value={Number(answer !== null) + index} />
+      <progress max={numOfQuestion} value={Number(answer !== null) + index} />
 
       <p>
-        Question <strong>{index + 1}</strong>/{numOfQuestions}
+        Question <strong>{index + 1}</strong>/{numOfQuestion}
       </p>
 
       <p>
