@@ -6,6 +6,7 @@ import Loader from "./components/Loader";
 import Error from "./components/Error";
 import StartScreen from "./components/StartScreen";
 import Questions from "./components/Questions";
+import Progress from "./components/Progress";
 
 const initialState = {
   questions: [],
@@ -68,12 +69,20 @@ function App() {
           <StartScreen questionsLength={questions.length} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Questions
-            index={index}
-            questions={questions.at(index)}
-            dispatch={dispatch}
-            answer={answer}
-          />
+          <>
+            <Progress
+              questions={questions}
+              index={index}
+              points={points}
+              answer={answer}
+            />
+            <Questions
+              index={index}
+              questions={questions.at(index)}
+              dispatch={dispatch}
+              answer={answer}
+            />
+          </>
         )}
       </Main>
     </div>

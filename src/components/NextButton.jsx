@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-export default function NextButton({ dispatch }) {
+export default function NextButton({ dispatch, answer }) {
+  if (answer === null) return null;
+
   // onClick
   function handleClick() {
     dispatch({

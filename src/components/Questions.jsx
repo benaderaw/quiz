@@ -14,7 +14,7 @@ export default function Questions({ questions, answer, dispatch, index }) {
         index={index}
       />
 
-      {answer !== null && <NextButton dispatch={dispatch} />}
+      <NextButton dispatch={dispatch} answer={answer} />
     </div>
   );
 }
